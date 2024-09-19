@@ -2,8 +2,6 @@ use core::arch::x86_64::_rdrand64_step;
 const  _ERROR : i8 = 0;
 const  _PASS : i8 = 1;
 
-/// [Intel's documentation]
-/// (<https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_rdrand64_step>)
 fn main() -> () {
     
     let _check_arch = check_arch();
@@ -21,15 +19,22 @@ fn main() -> () {
     return ();
 }
 
-/// L'instruction RDRAND fait partie de la famille d'instructions Intel Secure Key, 
-/// qui exploite un générateur de nombres aléatoires matériel basé sur des phénomènes physiques pour produire de l'aléatoire
+/// [Intel's documentation]
+/// (<https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_rdrand64_step>)
 /// 
+/// 
+/// Generates a random 64-bit number using the Intel hardware RNG.
+///
+/// This function utilizes the Intel RDRAND instruction to generate a 
+/// true random number from hardware. It stores the result in the provided 
+/// mutable reference `random`.
+
 pub fn gen_rand() -> Result<u64, String> {
-    let mut random : u64 = 0; // stored value
+    let mut random : u64 = 0;
     unsafe {
         let b_check: i32 = _rdrand64_step(&mut random);
         if b_check != _PASS as i32 {
-            return Err("🚫Cannot generate random numbers".to_string());
+            return Err("🚫Failed to generate a random number".to_string());
         }
         return  Ok(random);
     }
@@ -41,6 +46,6 @@ pub fn check_arch() -> Result<(), String> {
         return Ok(());
     }
     else {
-        return Err(String::from("🚫Requirements intel Arch"));
+        return Err(String::from("🚫Error: This program requires Intel x86 or x86_64 architecture."));
     }
 }
