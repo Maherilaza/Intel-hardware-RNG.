@@ -21,13 +21,6 @@ fn main() -> () {
 
 /// [Intel's documentation]
 /// (<https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_rdrand64_step>)
-/// 
-/// 
-/// Generates a random 64-bit number using the Intel hardware RNG.
-///
-/// This function utilizes the Intel RDRAND instruction to generate a 
-/// true random number from hardware. It stores the result in the provided 
-/// mutable reference `random`.
 
 pub fn gen_rand() -> Result<u64, String> {
     let mut random : u64 = 0;
