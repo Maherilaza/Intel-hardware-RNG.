@@ -8,10 +8,10 @@ fn main() -> () {
     
     let _check_arch = check_arch();
 
-    let random_number: Result<u8, String> = gen_rand();
+    let random_number: Result<u64, String> = gen_rand();
     match random_number {
         Ok(result) => {
-            println!("✅Random number : {}", result);
+            println!("✅: {}", result);
         }
         Err(e) => {
             print!("{}", e);
@@ -24,14 +24,14 @@ fn main() -> () {
 /// L'instruction RDRAND fait partie de la famille d'instructions Intel Secure Key, 
 /// qui exploite un générateur de nombres aléatoires matériel basé sur des phénomènes physiques pour produire de l'aléatoire
 /// 
-pub fn gen_rand() -> Result<u8, String> {
+pub fn gen_rand() -> Result<u64, String> {
     let mut random : u64 = 0; // stored value
     unsafe {
-        let b_check: i8 = _rdrand64_step(&mut random) as i8;
-        if b_check != _PASS {
+        let b_check: i32 = _rdrand64_step(&mut random);
+        if b_check != _PASS as i32 {
             return Err("🚫Cannot generate random numbers".to_string());
         }
-        return  Ok(random as u8);
+        return  Ok(random);
     }
 
 }
