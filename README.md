@@ -1,7 +1,7 @@
 ### Intel hardware RNG.
 ![Rust](https://img.shields.io/badge/made%20with-Rust-red)
 ![Platform](https://img.shields.io/badge/platform-windows-blueviolet)
-
+![Architecture](https://img.shields.io/badge/arch-x86_64-black)
 </br>
 
 Generate a random 64-bit number using the Intel RDRAND instruction with the `_rdrand64_step` intrinsic. 
